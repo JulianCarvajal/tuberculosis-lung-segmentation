@@ -19,12 +19,70 @@ The dataset is not included in this repository.
 
 ## Setup
 
+Requires Python 3.10+ and `git`. A CUDA GPU is optional (only used to train the segmentation networks).
+
 ### 1. Clone the repository
+
+```bash
+git clone git@github.com:JulianCarvajal/tuberculosis-lung-segmentation.git
+cd tuberculosis-lung-segmentation
+```
 
 ### 2. Create the virtual environment
 
+```bash
+python3 -m venv .venv
+```
+
 ### 3. Activate the environment
+
+```bash
+source .venv/bin/activate        # Linux / macOS / WSL
+.venv\Scripts\activate           # Windows
+```
 
 ### 4. Install dependencies
 
+```bash
+pip install -r requirements.txt
+pip install -e .
+```
+
+`pip install -e .` installs the project code (`src/tbseg`) as a package, so it can be
+imported from scripts and notebooks (`from tbseg.data import load_subset`).
+`pyradiomics` is installed from its GitHub tag because the PyPI release does not build with numpy 2.
+
 ### 5. Download the dataset
+
+Download TBX11K from the link above and extract it so that images end up in
+`data/raw/TBX11K/imgs/{tb,health,sick,test,extra}`.
+
+### 6. Build the study subset
+
+```bash
+python -m tbseg.data
+```
+
+Writes `data/metadata/subset.csv` (versioned): 1600 images (800 TB, 400 healthy,
+400 sick non-TB), exact duplicates removed, with 5 stratified folds. Running it
+again produces the same file.
+
+### 7. Run the tests
+
+```bash
+pytest
+```
+
+## Project structure
+
+```
+data/raw/            original datasets (not versioned)
+data/external/       external datasets, e.g. lung masks (not versioned)
+data/metadata/       subset and splits (versioned)
+models/              trained weights (not versioned)
+masks/<method>/      lung masks per segmentation method (not versioned)
+results/             features, metrics and figures
+notebooks/           exploration and analysis
+src/tbseg/           project code
+tests/               tests
+```

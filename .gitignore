@@ -1,21 +1,30 @@
 # Python
 __pycache__/
 *.py[cod]
+*.egg-info/
 .venv/
 venv/
 
 # Jupyter
 .ipynb_checkpoints/
 
-# Dataset
+# Data (keep folder structure, ignore contents)
 data/raw/*
+data/external/*
 data/processed/*
+!data/**/.gitkeep
+
+# Model weights
+models/*
+!models/.gitkeep
 
 # Generated masks
 masks/*
+!masks/.gitkeep
 
-# Results
-results/*
+# Results: small tables and figures are versioned; heavy files are not
+results/**/*.npy
+results/**/*.pt
 
 # OS
 .DS_Store
