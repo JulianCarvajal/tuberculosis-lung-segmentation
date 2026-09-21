@@ -67,7 +67,23 @@ Writes `data/metadata/subset.csv` (versioned): 1600 images (800 TB, 400 healthy,
 400 sick non-TB), exact duplicates removed, with 5 stratified folds. Running it
 again produces the same file.
 
-### 7. Run the tests
+### 7. Prepare the lung mask dataset (segmentation training)
+
+TBX11K has no lung masks, so the segmentation networks are trained on
+Montgomery + Shenzhen (704 images with manual lung masks). Download
+[Chest Xray Masks and Labels](https://www.kaggle.com/datasets/nikhilpandey360/chest-xray-masks-and-labels)
+and place its `CXR_png/`, `masks/` and `ClinicalReadings/` folders in
+`data/external/montgomery_shenzhen/`. Then run:
+
+```bash
+python -m tbseg.segmentation.prepare
+```
+
+Writes 512x512 images and binary masks to `data/processed/segtrain/` and the
+train/val/test split (70/15/15, stratified by source and diagnosis) to
+`data/metadata/segtrain_split.csv` (versioned).
+
+### 8. Run the tests
 
 ```bash
 pytest
