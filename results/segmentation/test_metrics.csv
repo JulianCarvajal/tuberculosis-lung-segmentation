@@ -1,0 +1,4 @@
+arch,seed,best_epoch,epochs_run,val_dice,test_dice,test_dice_std,test_dice_min,test_iou,minutes
+unet,42,43,53,0.9578,0.9623,0.0264,0.7922,0.9284,4.0
+unet,43,18,28,0.9555,0.9615,0.0265,0.7958,0.9271,2.0
+unet,44,49,59,0.9593,0.9639,0.0251,0.8095,0.9313,4.5
