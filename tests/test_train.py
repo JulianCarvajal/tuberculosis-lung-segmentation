@@ -1,6 +1,8 @@
 import numpy as np
+import pandas as pd
 import torch
 
+from tbseg.segmentation import train
 from tbseg.segmentation.train import augment, build_model, overlap_metrics
 
 
@@ -37,3 +39,14 @@ def test_models_return_one_channel_same_size():
     x = torch.randn(1, 1, 64, 64)
     for arch in ("unet", "attention_unet"):
         assert build_model(arch)(x).shape == (1, 1, 64, 64)
+
+
+def test_update_csv_replaces_whole_run(tmp_path, monkeypatch):
+    monkeypatch.setattr(train, "SEG_RESULTS_DIR", tmp_path)
+    run = lambda seed, epochs: pd.DataFrame({"arch": "unet", "seed": seed, "epoch": range(1, epochs + 1)})
+    train.update_csv("history.csv", run(42, 30), "unet", 42)
+    train.update_csv("history.csv", run(43, 25), "unet", 43)
+    # Repetir la semilla 42 con menos épocas no debe dejar épocas viejas
+    train.update_csv("history.csv", run(42, 10), "unet", 42)
+    table = pd.read_csv(tmp_path / "history.csv")
+    assert table.groupby("seed")["epoch"].max().to_dict() == {42: 10, 43: 25}

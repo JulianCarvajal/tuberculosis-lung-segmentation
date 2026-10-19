@@ -1,12 +1,14 @@
 """Prepara Montgomery + Shenzhen para entrenar las redes de segmentación.
 
 - Redimensiona imágenes y máscaras a 512x512, igual que TBX11K (sin conservar proporción).
-- Divide en train/val/test estratificando por dataset de origen y diagnóstico.
+- Divide en train/val/test por paciente, estratificando por dataset de origen y diagnóstico.
 
 Uso: python -m tbseg.segmentation.prepare
   -> data/processed/segtrain/{images,masks}/<image_id>.png
   -> data/metadata/segtrain_split.csv
 """
+
+import re
 
 import cv2
 import pandas as pd
@@ -31,6 +33,22 @@ def mask_path(image_id: str):
     return SEGTRAIN_RAW_DIR / "masks" / f"{image_id}{suffix}.png"
 
 
+def patient_ids(image_ids) -> dict:
+    """Asigna a cada imagen el identificador de su paciente.
+
+    Algunas lecturas de Montgomery dicen "same pt as MCUCXR_…": son controles del mismo
+    paciente. Todas sus imágenes reciben como identificador la primera (orden alfabético);
+    el resto de imágenes son su propio paciente.
+    """
+    pid = {}
+    for image_id in image_ids:
+        reading = (SEGTRAIN_RAW_DIR / "ClinicalReadings" / f"{image_id}.txt").read_text()
+        same = re.findall(r"MCUCXR_\d{4}_\d", reading, re.I) if "same pt" in reading.lower() else []
+        pid[image_id] = min([image_id, *(s.upper() for s in same)])
+    # Segunda pasada para cadenas (A apunta a B y B apunta a C)
+    return {image_id: pid.get(p, p) for image_id, p in pid.items()}
+
+
 def build_index() -> pd.DataFrame:
     """Lista las imágenes con máscara. El nombre termina en _0 (normal) o _1 (TB)."""
     rows = [
@@ -42,27 +60,33 @@ def build_index() -> pd.DataFrame:
         for p in sorted((SEGTRAIN_RAW_DIR / "CXR_png").glob("*.png"))
         if mask_path(p.stem).exists()
     ]
-    return pd.DataFrame(rows)
+    index = pd.DataFrame(rows)
+    index.insert(1, "patient_id", index["image_id"].map(patient_ids(index["image_id"])))
+    return index
 
 
 def assign_split(index: pd.DataFrame) -> pd.DataFrame:
-    """Divide en train/val/test manteniendo la proporción de origen y diagnóstico."""
-    strata = index["source"] + "_" + index["tb"].astype(str)
+    """Divide en train/val/test por paciente, manteniendo la proporción de origen y diagnóstico.
+
+    La división se hace sobre pacientes y no sobre imágenes, para que todas las
+    radiografías de un mismo paciente queden en la misma partición.
+    """
+    patients = index.groupby("patient_id")[["source", "tb"]].first()
+    strata = patients["source"] + "_" + patients["tb"].astype(str)
     n_val_test = SEGTRAIN_SPLIT["val"] + SEGTRAIN_SPLIT["test"]
-    train_idx, rest_idx = train_test_split(
-        index.index, test_size=n_val_test, stratify=strata, random_state=SEED
+    train_ids, rest_ids = train_test_split(
+        patients.index, test_size=n_val_test, stratify=strata, random_state=SEED
     )
-    val_idx, test_idx = train_test_split(
-        rest_idx,
+    val_ids, test_ids = train_test_split(
+        rest_ids,
         test_size=SEGTRAIN_SPLIT["test"] / n_val_test,
-        stratify=strata[rest_idx],
+        stratify=strata[rest_ids],
         random_state=SEED,
     )
-    index = index.copy()
-    index.loc[train_idx, "split"] = "train"
-    index.loc[val_idx, "split"] = "val"
-    index.loc[test_idx, "split"] = "test"
-    return index
+    split = pd.Series("train", index=patients.index)
+    split[val_ids] = "val"
+    split[test_ids] = "test"
+    return index.assign(split=index["patient_id"].map(split))
 
 
 def preprocess(image_id: str):
@@ -91,7 +115,7 @@ def main():
 
     SEGTRAIN_CSV.parent.mkdir(parents=True, exist_ok=True)
     index.to_csv(SEGTRAIN_CSV, index=False)
-    print(f"{len(index)} pares imagen/máscara en {SEGTRAIN_DIR}")
+    print(f"{len(index)} pares imagen/máscara de {index['patient_id'].nunique()} pacientes en {SEGTRAIN_DIR}")
     print(pd.crosstab([index["source"], index["tb"]], index["split"], margins=True, margins_name="total"))
 
 
