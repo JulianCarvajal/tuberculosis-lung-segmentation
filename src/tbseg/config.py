@@ -15,6 +15,8 @@ SEGTRAIN_RAW_DIR = DATA_DIR / "external" / "montgomery_shenzhen"
 SEGTRAIN_DIR = DATA_DIR / "processed" / "segtrain"
 SEGTRAIN_CSV = METADATA_DIR / "segtrain_split.csv"
 SEGTRAIN_SPLIT = {"train": 0.70, "val": 0.15, "test": 0.15}
+# Índice con metadatos clínicos y de imagen generado por notebooks/01_exploration_montgomery_shenzhen
+MS_INDEX_CSV = METADATA_DIR / "montgomery_shenzhen_index.csv"
 
 MODELS_DIR = ROOT / "models"
 MASKS_DIR = ROOT / "masks"
