@@ -221,12 +221,14 @@ def train(arch: str, seed: int, epochs: int = MAX_EPOCHS, limit: int | None = No
     return pd.DataFrame(history), test_scores
 
 
-def update_csv(name: str, rows: pd.DataFrame, keys: list[str]):
-    """Acumula las filas en un CSV, reemplazando las de una corrida repetida."""
+def update_csv(name: str, rows: pd.DataFrame, arch: str, seed: int):
+    """Acumula las filas de una corrida en un CSV. Si la corrida ya existía, la reemplaza completa."""
     path = SEG_RESULTS_DIR / name
-    previous = pd.read_csv(path) if path.exists() else pd.DataFrame()
-    table = pd.concat([previous, rows]).drop_duplicates(keys, keep="last").sort_values(keys)
-    table.to_csv(path, index=False)
+    if path.exists():
+        previous = pd.read_csv(path)
+        previous = previous[~((previous["arch"] == arch) & (previous["seed"] == seed))]
+        rows = pd.concat([previous, rows])
+    rows.sort_values(["arch", "seed"], kind="stable").to_csv(path, index=False)
 
 
 def save_run(arch, seed, best, history, test_scores):
@@ -246,9 +248,9 @@ def save_run(arch, seed, best, history, test_scores):
         "test_iou": round(float(test_scores["iou"].mean()), 4),
         "minutes": round(float(history["minutes"].iloc[-1]), 1),
     }])
-    update_csv("history.csv", history, ["arch", "seed", "epoch"])
-    update_csv("test_per_image.csv", test_scores, ["arch", "seed", "image_id"])
-    update_csv("test_metrics.csv", summary, ["arch", "seed"])
+    update_csv("history.csv", history, arch, seed)
+    update_csv("test_per_image.csv", test_scores, arch, seed)
+    update_csv("test_metrics.csv", summary, arch, seed)
 
 
 def main():

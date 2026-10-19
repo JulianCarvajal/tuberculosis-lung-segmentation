@@ -80,7 +80,7 @@ python -m tbseg.segmentation.prepare
 ```
 
 Writes 512x512 images and binary masks to `data/processed/segtrain/` and the
-train/val/test split (70/15/15, stratified by source and diagnosis) to
+train/val/test split (70/15/15 by patient, stratified by source and diagnosis) to
 `data/metadata/segtrain_split.csv` (versioned).
 
 ### 8. Run the tests
