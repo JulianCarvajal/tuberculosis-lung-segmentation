@@ -14,7 +14,9 @@ SUBSET_CSV = METADATA_DIR / "subset.csv"
 SEGTRAIN_RAW_DIR = DATA_DIR / "external" / "montgomery_shenzhen"
 SEGTRAIN_DIR = DATA_DIR / "processed" / "segtrain"
 SEGTRAIN_CSV = METADATA_DIR / "segtrain_split.csv"
-SEGTRAIN_SPLIT = {"train": 0.70, "val": 0.15, "test": 0.15}
+# 80/20 por paciente; del 80 % de entrenamiento se aparta un 10 % solo para la detención temprana
+SEGTRAIN_TEST_SIZE = 0.20
+SEGTRAIN_VAL_SIZE = 0.10
 # Índice con metadatos clínicos y de imagen generado por notebooks/01_exploration_montgomery_shenzhen
 MS_INDEX_CSV = METADATA_DIR / "montgomery_shenzhen_index.csv"
 

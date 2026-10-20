@@ -80,10 +80,25 @@ python -m tbseg.segmentation.prepare
 ```
 
 Writes 512x512 images and binary masks to `data/processed/segtrain/` and the
-train/val/test split (70/15/15 by patient, stratified by source and diagnosis) to
-`data/metadata/segtrain_split.csv` (versioned).
+split to `data/metadata/segtrain_split.csv` (versioned): 80/20 train/test by patient,
+stratified by source and diagnosis; 10% of the training patients are held out as
+validation, used only for early stopping (72/8/20 overall).
 
-### 8. Run the tests
+### 8. Train the segmentation networks and generate the lung masks
+
+```bash
+python -m tbseg.segmentation.train --arch unet
+python -m tbseg.segmentation.train --arch attention_unet
+python -m tbseg.segmentation.predict --arch unet
+python -m tbseg.segmentation.predict --arch attention_unet
+```
+
+Training saves the weights to `models/` and the metrics to `results/segmentation/`.
+Prediction writes the raw masks (threshold 0.5, no post-processing) to
+`masks/<dataset>/<method>/` and a per-image quality check (Dice against the manual
+mask, connected components, area) to `results/segmentation/mask_qc_<dataset>.csv`.
+
+### 9. Run the tests
 
 ```bash
 pytest
@@ -96,7 +111,7 @@ data/raw/            original datasets (not versioned)
 data/external/       external datasets, e.g. lung masks (not versioned)
 data/metadata/       subset and splits (versioned)
 models/              trained weights (not versioned)
-masks/<method>/      lung masks per segmentation method (not versioned)
+masks/<dataset>/<method>/  lung masks per segmentation method (not versioned)
 results/             features, metrics and figures
 notebooks/           exploration and analysis
 src/tbseg/           project code
