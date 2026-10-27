@@ -1,104 +1,121 @@
-# Tuberculosis Lung Segmentation
+# Segmentación pulmonar en tuberculosis
 
 Proyecto de investigación para evaluar diferentes técnicas de segmentación
 pulmonar y su impacto en la extracción de características radiómicas
 a partir de radiografías de tórax.
 
-## Objective
+## Objetivo
 
-Evaluate different lung segmentation strategies and their effect on the
-stability, reproducibility and predictive usefulness of radiomic features
-for tuberculosis detection.
+Evaluar distintas estrategias de segmentación pulmonar y su efecto sobre la
+estabilidad, la reproducibilidad y la utilidad predictiva de las características
+radiómicas para la detección de tuberculosis.
 
-## Dataset
+## Datasets
 
-TBX11K:
-https://github.com/yun-liu/Tuberculosis
+El proyecto usa dos datasets con roles distintos:
 
-The dataset is not included in this repository.
+**Montgomery + Shenzhen** — conjunto de trabajo principal.
+704 radiografías con máscaras pulmonares trazadas manualmente (345 TB, 359 normales).
+Se usan para entrenar los segmentadores y para extraer las características radiómicas
+con las que se entrenan y evalúan los clasificadores.
 
-## Setup
+> Descargar desde Kaggle:
+> [Chest Xray Masks and Labels](https://www.kaggle.com/datasets/nikhilpandey360/chest-xray-masks-and-labels)
 
-Requires Python 3.10+ and `git`. A CUDA GPU is optional (only used to train the segmentation networks).
+**TBX11K** — ampliación futura.
+8 400 radiografías etiquetadas (800 TB, 7 600 no-TB), sin máscaras pulmonares.
+TBX11K no tiene máscaras, así que los segmentadores se entrenan primero en
+Montgomery + Shenzhen y luego se aplican sobre TBX11K.
 
-### 1. Clone the repository
+> Descargar desde:
+> [https://github.com/yun-liu/Tuberculosis](https://github.com/yun-liu/Tuberculosis)
+
+Ninguno de los dos datasets se incluye en este repositorio.
+
+## Configuración
+
+Requiere Python 3.10+ y `git`. Una GPU con CUDA es opcional
+(solo se usa para entrenar las redes de segmentación).
+
+### 1. Clonar el repositorio
 
 ```bash
 git clone git@github.com:JulianCarvajal/tuberculosis-lung-segmentation.git
 cd tuberculosis-lung-segmentation
 ```
 
-### 2. Create the virtual environment
+### 2. Crear el entorno virtual
 
 ```bash
 python3 -m venv .venv
 ```
 
-### 3. Activate the environment
+### 3. Activar el entorno
 
 ```bash
 source .venv/bin/activate        # Linux / macOS / WSL
 .venv\Scripts\activate           # Windows
 ```
 
-### 4. Install dependencies
+### 4. Instalar dependencias
 
 ```bash
 pip install -r requirements.txt
 pip install -e .
 ```
 
-`pip install -e .` installs the project code (`src/tbseg`) as a package, so it can be
-imported from scripts and notebooks (`from tbseg.data import load_subset`).
-`pyradiomics` is installed from its GitHub tag because the PyPI release does not build with numpy 2.
+`pip install -e .` instala el código del proyecto (`src/tbseg`) como paquete,
+de modo que se puede importar desde scripts y notebooks (`from tbseg.data import load_subset`).
+`pyradiomics` se instala desde su etiqueta de GitHub porque la versión de PyPI
+no compila con numpy 2.
 
-### 5. Download the dataset
+### 5. Descargar los datasets
 
-Download TBX11K from the link above and extract it so that images end up in
-`data/raw/TBX11K/imgs/{tb,health,sick,test,extra}`.
+Seguir las instrucciones del notebook `00_descarga_datasets.ipynb`, que guía
+la descarga de ambos datasets, indica dónde colocar cada carpeta y verifica
+que la estructura sea correcta antes de continuar.
 
-### 6. Build the study subset
-
-```bash
-python -m tbseg.data
-```
-
-Writes `data/metadata/subset.csv` (versioned): 1600 images (800 TB, 400 healthy,
-400 sick non-TB), exact duplicates removed, with 5 stratified folds. Running it
-again produces the same file.
-
-### 7. Prepare the lung mask dataset (segmentation training)
-
-TBX11K has no lung masks, so the segmentation networks are trained on
-Montgomery + Shenzhen (704 images with manual lung masks). Download
-[Chest Xray Masks and Labels](https://www.kaggle.com/datasets/nikhilpandey360/chest-xray-masks-and-labels)
-and place its `CXR_png/`, `masks/` and `ClinicalReadings/` folders in
-`data/external/montgomery_shenzhen/`. Then run:
+### 6. Preparar el dataset de segmentación
 
 ```bash
 python -m tbseg.segmentation.prepare
 ```
 
-Writes 512x512 images and binary masks to `data/processed/segtrain/` and the
-train/val/test split (70/15/15 by patient, stratified by source and diagnosis) to
-`data/metadata/segtrain_split.csv` (versioned).
+Escribe las imágenes y máscaras a 512 × 512 en `data/processed/segtrain/`
+y la partición train/val/test (70/15/15 por paciente, estratificada por fuente
+y diagnóstico) en `data/metadata/segtrain_split.csv` (versionado).
 
-### 8. Run the tests
+### 7. Construir el subconjunto de estudio de TBX11K
+
+```bash
+python -m tbseg.data
+```
+
+Escribe `data/metadata/subset.csv` (versionado): 1 600 imágenes (800 TB,
+400 sanas, 400 enfermas no-TB), duplicados exactos eliminados, con 5 folds
+estratificados. Ejecutarlo de nuevo produce el mismo archivo.
+
+### 8. Ejecutar los tests
 
 ```bash
 pytest
 ```
 
-## Project structure
+## Estructura del proyecto
 
 ```
-data/raw/            original datasets (not versioned)
-data/external/       external datasets, e.g. lung masks (not versioned)
-data/metadata/       subset and splits (versioned)
-models/              trained weights (not versioned)
-masks/<method>/      lung masks per segmentation method (not versioned)
-results/             features, metrics and figures
-notebooks/           exploration and analysis
-src/tbseg/           project code
-tests/               tests
+data/raw/                    datasets originales (no versionados)
+data/external/               datasets externos, p. ej. máscaras pulmonares (no versionados)
+data/processed/              imágenes y máscaras preprocesadas (no versionados)
+data/metadata/               subconjuntos y particiones (versionados)
+models/                      pesos entrenados (no versionados)
+masks/<método>/              máscaras pulmonares por método de segmentación (no versionadas)
+results/                     características, métricas y figuras
+src/tbseg/                   código del proyecto
+tests/                       tests
+notebooks/
+  00_descarga_datasets.ipynb                 descarga y verificación de los datasets
+  01a_exploracion_tbx11k.ipynb               exploración del dataset TBX11K
+  01b_exploracion_montgomery_shenzhen.ipynb  exploración de Montgomery + Shenzhen
+  02_segmentacion.ipynb                      entrenamiento y evaluación de segmentadores
 ```
