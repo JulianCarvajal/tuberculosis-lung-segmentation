@@ -66,25 +66,22 @@ def build_index() -> pd.DataFrame:
 
 
 def assign_split(index: pd.DataFrame) -> pd.DataFrame:
-    """Divide en train/val/test por paciente, manteniendo la proporción de origen y diagnóstico.
-
-    La división se hace sobre pacientes y no sobre imágenes, para que todas las
-    radiografías de un mismo paciente queden en la misma partición.
-    """
     patients = index.groupby("patient_id")[["source", "tb"]].first()
     strata = patients["source"] + "_" + patients["tb"].astype(str)
     n_val_test = SEGTRAIN_SPLIT["val"] + SEGTRAIN_SPLIT["test"]
+
     train_ids, rest_ids = train_test_split(
-        patients.index, test_size=n_val_test, stratify=strata, random_state=SEED
+        patients.index.tolist(),  # ← tolist() evita el error de pyarrow
+        test_size=n_val_test, stratify=strata.tolist(), random_state=SEED
     )
     val_ids, test_ids = train_test_split(
         rest_ids,
         test_size=SEGTRAIN_SPLIT["test"] / n_val_test,
-        stratify=strata[rest_ids],
+        stratify=strata[rest_ids].tolist(),  # ← igual aquí
         random_state=SEED,
     )
     split = pd.Series("train", index=patients.index)
-    split[val_ids] = "val"
+    split[val_ids]  = "val"
     split[test_ids] = "test"
     return index.assign(split=index["patient_id"].map(split))
 
