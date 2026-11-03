@@ -66,6 +66,11 @@ def build_index() -> pd.DataFrame:
 
 
 def assign_split(index: pd.DataFrame) -> pd.DataFrame:
+    """Divide en train/val/test por paciente, manteniendo la proporción de origen y diagnóstico.
+
+    La división se hace sobre pacientes y no sobre imágenes, para que todas las
+    radiografías de un mismo paciente queden en la misma partición.
+    """
     patients = index.groupby("patient_id")[["source", "tb"]].first()
     strata = patients["source"] + "_" + patients["tb"].astype(str)
     n_val_test = SEGTRAIN_SPLIT["val"] + SEGTRAIN_SPLIT["test"]
