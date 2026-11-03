@@ -151,6 +151,7 @@ notebooks/
   01a_exploracion_tbx11k.ipynb               exploración del dataset TBX11K
   01b_exploracion_montgomery_shenzhen.ipynb  exploración de Montgomery + Shenzhen
   02_segmentacion.ipynb                      entrenamiento, evaluación y control de calidad de segmentadores
+  03_radiomica.ipynb                         revisión de las características radiómicas antes de los clasificadores
 ```
 
 ## Referencias
