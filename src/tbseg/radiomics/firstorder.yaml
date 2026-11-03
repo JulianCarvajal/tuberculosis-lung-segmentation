@@ -1,0 +1,25 @@
+# Parámetros de pyradiomics para las características de primer orden.
+# El mismo archivo se usa para todos los métodos de segmentación: solo cambia la máscara.
+# Referencia: https://pyradiomics.readthedocs.io/en/latest/customization.html
+
+imageType:
+  Original: {}            # imagen sin filtros (sin wavelet, LoG, etc.)
+
+featureClass:
+  firstorder: []          # lista vacía = las 18 de primer orden habilitadas por defecto
+
+setting:
+  force2D: true           # radiografías 2D
+  label: 1                # extract.py pasa las máscaras de 0/255 a 0/1
+
+  # Normalización z-score de cada imagen (media y desviación de TODA la imagen, no solo del pulmón).
+  # Sin ella, Mean, Median, Minimum y Energy separan Shenzhen de Montgomery con AUC 1.0:
+  # las intensidades de un PNG no tienen unidad física y dependen del equipo de adquisición.
+  normalize: true
+  normalizeScale: 100     # z * 100: en Montgomery-Shenzhen el pulmón queda entre -311 y 250
+  voxelArrayShift: 400    # desplaza a valores positivos para Energy, TotalEnergy y RootMeanSquared
+
+  # Discretización (solo afecta a Entropy y Uniformity): número fijo de niveles.
+  # Con número fijo, ambas no dependen del contraste de la imagen; con ancho fijo (binWidth)
+  # pasan a separar las fuentes (AUC 0.90 frente a 0.56).
+  binCount: 32
