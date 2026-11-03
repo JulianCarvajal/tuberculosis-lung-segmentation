@@ -1,7 +1,8 @@
 """Prepara Montgomery + Shenzhen para entrenar las redes de segmentación.
 
 - Redimensiona imágenes y máscaras a 512x512, igual que TBX11K (sin conservar proporción).
-- Divide en train/val/test por paciente, estratificando por dataset de origen y diagnóstico.
+- Divide 80/20 (train/test) por paciente, estratificando por dataset de origen y diagnóstico.
+  Del 80 % se aparta un 10 % (val) solo para la detención temprana: 72/8/20 en total.
 
 Uso: python -m tbseg.segmentation.prepare
   -> data/processed/segtrain/{images,masks}/<image_id>.png
@@ -21,7 +22,8 @@ from tbseg.config import (
     SEGTRAIN_CSV,
     SEGTRAIN_DIR,
     SEGTRAIN_RAW_DIR,
-    SEGTRAIN_SPLIT,
+    SEGTRAIN_TEST_SIZE,
+    SEGTRAIN_VAL_SIZE,
 )
 
 SOURCES = {"CHNCXR": "shenzhen", "MCUCXR": "montgomery"}
@@ -69,22 +71,23 @@ def assign_split(index: pd.DataFrame) -> pd.DataFrame:
     """Divide en train/val/test por paciente, manteniendo la proporción de origen y diagnóstico.
 
     La división se hace sobre pacientes y no sobre imágenes, para que todas las
-    radiografías de un mismo paciente queden en la misma partición.
+    radiografías de un mismo paciente queden en la misma partición. Primero se separa
+    el 20 % de prueba; del 80 % restante se aparta un 10 % para la detención temprana.
     """
     patients = index.groupby("patient_id")[["source", "tb"]].first()
     strata = patients["source"] + "_" + patients["tb"].astype(str)
-    n_val_test = SEGTRAIN_SPLIT["val"] + SEGTRAIN_SPLIT["test"]
-    train_ids, rest_ids = train_test_split(
-        patients.index, test_size=n_val_test, stratify=strata, random_state=SEED
+    train_ids, test_ids = train_test_split(
+        patients.index.tolist(),  # ← tolist() evita el error de pyarrow
+        test_size=SEGTRAIN_TEST_SIZE, stratify=strata.tolist(), random_state=SEED
     )
-    val_ids, test_ids = train_test_split(
-        rest_ids,
-        test_size=SEGTRAIN_SPLIT["test"] / n_val_test,
-        stratify=strata[rest_ids],
+    train_ids, val_ids = train_test_split(
+        train_ids,
+        test_size=SEGTRAIN_VAL_SIZE,
+        stratify=strata[train_ids].tolist(),  # ← igual aquí
         random_state=SEED,
     )
     split = pd.Series("train", index=patients.index)
-    split[val_ids] = "val"
+    split[val_ids]  = "val"
     split[test_ids] = "test"
     return index.assign(split=index["patient_id"].map(split))
 
