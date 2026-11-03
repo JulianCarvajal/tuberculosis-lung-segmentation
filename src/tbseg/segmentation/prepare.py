@@ -77,13 +77,17 @@ def assign_split(index: pd.DataFrame) -> pd.DataFrame:
     patients = index.groupby("patient_id")[["source", "tb"]].first()
     strata = patients["source"] + "_" + patients["tb"].astype(str)
     train_ids, test_ids = train_test_split(
-        patients.index, test_size=SEGTRAIN_TEST_SIZE, stratify=strata, random_state=SEED
+        patients.index.tolist(),  # ← tolist() evita el error de pyarrow
+        test_size=SEGTRAIN_TEST_SIZE, stratify=strata.tolist(), random_state=SEED
     )
     train_ids, val_ids = train_test_split(
-        train_ids, test_size=SEGTRAIN_VAL_SIZE, stratify=strata[train_ids], random_state=SEED
+        train_ids,
+        test_size=SEGTRAIN_VAL_SIZE,
+        stratify=strata[train_ids].tolist(),  # ← igual aquí
+        random_state=SEED,
     )
     split = pd.Series("train", index=patients.index)
-    split[val_ids] = "val"
+    split[val_ids]  = "val"
     split[test_ids] = "test"
     return index.assign(split=index["patient_id"].map(split))
 
