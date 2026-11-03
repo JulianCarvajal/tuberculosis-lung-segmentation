@@ -15,7 +15,8 @@ radiómicas para la detección de tuberculosis.
 El proyecto usa dos datasets con roles distintos:
 
 **Montgomery + Shenzhen** — conjunto de trabajo principal.
-704 radiografías con máscaras pulmonares trazadas manualmente (345 TB, 359 normales).
+704 radiografías con máscaras pulmonares trazadas manualmente (345 TB, 359 normales;
+Montgomery 138, Shenzhen 566), de la U.S. National Library of Medicine [Jaeger et al., 2014].
 Se usan para entrenar los segmentadores y para extraer las características radiómicas
 con las que se entrenan y evalúan los clasificadores.
 
@@ -82,10 +83,12 @@ python -m tbseg.segmentation.prepare
 ```
 
 Escribe las imágenes y máscaras a 512 × 512 en `data/processed/segtrain/`
-y la partición train/val/test (70/15/15 por paciente, estratificada por fuente
-y diagnóstico) en `data/metadata/segtrain_split.csv` (versionado).
+y la partición en `data/metadata/segtrain_split.csv` (versionado): 80/20 train/test
+por paciente, estratificada por fuente y diagnóstico. Del 80 % se aparta un 10 %
+como validación, solo para la detención temprana (72/8/20 en total). La misma
+partición se usa para las redes de segmentación y los clasificadores de TB.
 
-### 7. Construir el subconjunto de estudio de TBX11K
+### 7. (Opcional) Construir el subconjunto de estudio de TBX11K
 
 ```bash
 python -m tbseg.data
@@ -95,7 +98,35 @@ Escribe `data/metadata/subset.csv` (versionado): 1 600 imágenes (800 TB,
 400 sanas, 400 enfermas no-TB), duplicados exactos eliminados, con 5 folds
 estratificados. Ejecutarlo de nuevo produce el mismo archivo.
 
-### 8. Ejecutar los tests
+### 8. Entrenar las redes y generar las máscaras pulmonares
+
+```bash
+python -m tbseg.segmentation.train --arch unet
+python -m tbseg.segmentation.train --arch attention_unet
+python -m tbseg.segmentation.predict --arch unet
+python -m tbseg.segmentation.predict --arch attention_unet
+```
+
+`--seed` es 42 por defecto. El entrenamiento guarda los pesos en `models/<arch>_seed<semilla>.pt`
+y las métricas en `results/segmentation/`. La predicción escribe las máscaras tal como
+salen de la red (umbral 0,5, sin posprocesamiento) en `masks/<dataset>/<método>/` y un
+control de calidad por imagen (Dice contra la máscara manual, componentes conectados, área)
+en `results/segmentation/mask_qc_<dataset>.csv`.
+
+### 9. Extraer las características radiómicas de primer orden
+
+```bash
+python -m tbseg.radiomics.extract --method unet
+python -m tbseg.radiomics.extract --method attention_unet
+```
+
+Escribe una tabla por método de segmentación en
+`results/radiomics/<dataset>_firstorder_<método>.csv` (versionado): una fila por imagen
+(mismas filas y mismo orden en todos los archivos) con `image_id, patient_id, source, tb, split`
+y las 18 características de primer orden de pyradiomics. Todos los métodos comparten los
+mismos parámetros, `src/tbseg/radiomics/firstorder.yaml`, así que entre archivos solo cambia la máscara.
+
+### 10. Ejecutar los tests
 
 ```bash
 pytest
@@ -109,13 +140,22 @@ data/external/               datasets externos, p. ej. máscaras pulmonares (no 
 data/processed/              imágenes y máscaras preprocesadas (no versionados)
 data/metadata/               subconjuntos y particiones (versionados)
 models/                      pesos entrenados (no versionados)
-masks/<método>/              máscaras pulmonares por método de segmentación (no versionadas)
-results/                     características, métricas y figuras
-src/tbseg/                   código del proyecto
+masks/<dataset>/<método>/    máscaras pulmonares por método de segmentación (no versionadas)
+results/segmentation/        métricas de entrenamiento y control de calidad de las máscaras
+results/radiomics/           características de primer orden, un CSV por método
+src/tbseg/                   código del proyecto: data.py (TBX11K), segmentation/, radiomics/
 tests/                       tests
+Documentation/               tutoriales de U-Net y MedSAM
 notebooks/
   00_descarga_datasets.ipynb                 descarga y verificación de los datasets
   01a_exploracion_tbx11k.ipynb               exploración del dataset TBX11K
   01b_exploracion_montgomery_shenzhen.ipynb  exploración de Montgomery + Shenzhen
-  02_segmentacion.ipynb                      entrenamiento y evaluación de segmentadores
+  02_segmentacion.ipynb                      entrenamiento, evaluación y control de calidad de segmentadores
+  03_radiomica.ipynb                         revisión de las características radiómicas antes de los clasificadores
 ```
+
+## Referencias
+
+S. Jaeger, S. Candemir, S. Antani, Y.-X. J. Wáng, P.-X. Lu, and G. Thoma, "Two public
+chest X-ray datasets for computer-aided screening of pulmonary diseases," *Quant.
+Imaging Med. Surg.*, vol. 4, no. 6, pp. 475–477, 2014.

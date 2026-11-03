@@ -21,9 +21,10 @@ def make_index():
 def test_split_proportions_per_stratum():
     split = assign_split(make_index())
     props = pd.crosstab([split["source"], split["tb"]], split["split"], normalize="index")
-    assert (props["train"].between(0.68, 0.72)).all()
-    assert (props["val"].between(0.13, 0.17)).all()
-    assert (props["test"].between(0.13, 0.17)).all()
+    # 80/20, y del 80 % un 10 % para validación: 72/8/20
+    assert (props["train"].between(0.70, 0.74)).all()
+    assert (props["val"].between(0.06, 0.10)).all()
+    assert (props["test"].between(0.18, 0.22)).all()
 
 
 def test_same_patient_same_split():
