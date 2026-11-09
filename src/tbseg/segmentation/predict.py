@@ -1,4 +1,4 @@
-"""Genera las máscaras pulmonares de una red entrenada sobre todas las imágenes de un dataset.
+"""Genera las máscaras pulmonares de una técnica sobre todas las imágenes de un dataset.
 
 Las máscaras se guardan tal como salen de la red (umbral 0.5, sin posprocesar), porque
 lo que se estudia es el efecto de cada técnica de segmentación tal cual.
@@ -6,13 +6,15 @@ lo que se estudia es el efecto de cada técnica de segmentación tal cual.
 Uso:
     python -m tbseg.segmentation.predict --arch unet
     python -m tbseg.segmentation.predict --arch attention_unet --seed 43
+    python -m tbseg.segmentation.predict --arch medsam
 
 Salidas:
     masks/<dataset>/<método>/<image_id>.png   binaria (0/255), 512x512
     results/segmentation/mask_qc_<dataset>.csv  control de calidad por imagen y método
 
 El método es el nombre de la arquitectura; con una semilla distinta a la por defecto
-se agrega el sufijo _seed<n> (p. ej. unet_seed43).
+se agrega el sufijo _seed<n> (p. ej. unet_seed43). MedSAM no se entrena, así que solo
+acepta la semilla por defecto y antes necesita python -m tbseg.segmentation.medsam.
 """
 
 import argparse
@@ -24,6 +26,7 @@ import torch
 from tqdm import tqdm
 
 from tbseg.config import MASKS_DIR, MODELS_DIR, SEED, SEGTRAIN_CSV, SEGTRAIN_DIR
+from tbseg.segmentation import medsam
 from tbseg.segmentation.train import ARCHITECTURES, BATCH_SIZE, THRESHOLD, build_model, update_csv
 
 # Por ahora solo Montgomery-Shenzhen; TBX11K se agrega aquí cuando se procese.
@@ -87,11 +90,13 @@ def mask_qc(mask: np.ndarray, manual: np.ndarray | None = None) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Genera las máscaras pulmonares de una red entrenada")
-    parser.add_argument("--arch", choices=list(ARCHITECTURES), required=True)
+    parser = argparse.ArgumentParser(description="Genera las máscaras pulmonares de una técnica")
+    parser.add_argument("--arch", choices=[*ARCHITECTURES, medsam.MEDSAM], required=True)
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument("--dataset", choices=list(DATASETS), default="montgomery_shenzhen")
     args = parser.parse_args()
+    if args.arch == medsam.MEDSAM and args.seed != SEED:
+        parser.error("MedSAM no se entrena: no acepta otra semilla")
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     dataset = DATASETS[args.dataset]
@@ -100,9 +105,11 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
 
     image_paths = sorted(dataset["images"].glob("*.png"))
-    model = load_model(args.arch, args.seed, device)
     rows = []
-    masks = predict_masks(model, image_paths, device)
+    if args.arch == medsam.MEDSAM:
+        masks = medsam.predict_masks(image_paths, device)
+    else:
+        masks = predict_masks(load_model(args.arch, args.seed, device), image_paths, device)
     for path, mask in tqdm(zip(image_paths, masks), total=len(image_paths), desc=method):
         cv2.imwrite(str(out_dir / path.name), mask)
         manual = None

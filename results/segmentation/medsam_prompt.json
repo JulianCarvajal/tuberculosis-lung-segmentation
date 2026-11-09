@@ -1,0 +1,20 @@
+{
+  "prior_boxes": [
+    [
+      67,
+      63,
+      236,
+      399
+    ],
+    [
+      277,
+      62,
+      443,
+      404
+    ]
+  ],
+  "margin": 10,
+  "strategy": "refined",
+  "refine_margin": 5,
+  "val_dice": 0.9042032601170096
+}

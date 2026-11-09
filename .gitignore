@@ -13,6 +13,7 @@ data/raw/*
 data/external/*
 data/processed/*
 !data/**/.gitkeep
+docs/
 
 # Model weights
 models/*

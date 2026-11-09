@@ -36,7 +36,7 @@ Ninguno de los dos datasets se incluye en este repositorio.
 ## Configuración
 
 Requiere Python 3.10+ y `git`. Una GPU con CUDA es opcional
-(solo se usa para entrenar las redes de segmentación).
+(solo se usa para entrenar las redes de segmentación y para ejecutar MedSAM).
 
 ### 1. Clonar el repositorio
 
@@ -113,11 +113,29 @@ salen de la red (umbral 0,5, sin posprocesamiento) en `masks/<dataset>/<método>
 control de calidad por imagen (Dice contra la máscara manual, componentes conectados, área)
 en `results/segmentation/mask_qc_<dataset>.csv`.
 
+MedSAM no se entrena, pero necesita una caja por pulmón:
+
+```bash
+python -m tbseg.segmentation.medsam
+python -m tbseg.segmentation.predict --arch medsam
+```
+
+El primer comando descarga los pesos a `models/medsam/` si no existen, calcula la caja a priori con
+las máscaras de train, elige los márgenes y la estrategia (caja a priori o caja refinada en una segunda
+pasada) con el Dice de val y evalúa en test solo la opción elegida. Guarda la elección en
+`results/segmentation/medsam_prompt.json` y las opciones probadas en `medsam_selection.csv`.
+El segundo comando escribe las máscaras y el control de calidad con el mismo formato que las redes.
+
+MedSAM se desarrolló con este mismo dataset (Tabla 3 del suplemento de Ma et al., 2024), así que su
+Dice en estas imágenes puede ser optimista. La caja a priori es igual para todas las imágenes: lo que
+se evalúa es MedSAM con esa caja, no MedSAM en general (`02_segmentacion.ipynb`, sección 6.3).
+
 ### 9. Extraer las características radiómicas de primer orden
 
 ```bash
 python -m tbseg.radiomics.extract --method unet
 python -m tbseg.radiomics.extract --method attention_unet
+python -m tbseg.radiomics.extract --method medsam
 ```
 
 Escribe una tabla por método de segmentación en
@@ -126,7 +144,18 @@ Escribe una tabla por método de segmentación en
 y las 18 características de primer orden de pyradiomics. Todos los métodos comparten los
 mismos parámetros, `src/tbseg/radiomics/firstorder.yaml`, así que entre archivos solo cambia la máscara.
 
-### 10. Ejecutar los tests
+### 10. Entrenar y evaluar los clasificadores de TB
+
+Ejecutar el notebook `04_deteccion_tb.ipynb`. Entrena SVM y Random Forest una vez por técnica de
+segmentación, con los CSV del paso anterior y la partición de `segtrain_split.csv`. Elige los
+hiperparámetros con 5 folds internos en train + val, evalúa una sola vez en test y compara todos
+los pares de técnicas con intervalos de confianza por bootstrap pareado. Se detiene si falta el CSV
+de alguna técnica de `METHODS` (sección 1 del notebook).
+
+Escribe en `results/classification/<dataset>/<familias>/`: `cv_metrics.csv`, `best_params.csv`,
+`test_predictions.csv`, `test_metrics.csv`, `test_comparison.csv` e `importances.csv`.
+
+### 11. Ejecutar los tests
 
 ```bash
 pytest
@@ -143,6 +172,7 @@ models/                      pesos entrenados (no versionados)
 masks/<dataset>/<método>/    máscaras pulmonares por método de segmentación (no versionadas)
 results/segmentation/        métricas de entrenamiento y control de calidad de las máscaras
 results/radiomics/           características de primer orden, un CSV por método
+results/classification/      métricas, predicciones e importancias de los clasificadores de TB
 src/tbseg/                   código del proyecto: data.py (TBX11K), segmentation/, radiomics/
 tests/                       tests
 Documentation/               tutoriales de U-Net y MedSAM
@@ -152,6 +182,7 @@ notebooks/
   01b_exploracion_montgomery_shenzhen.ipynb  exploración de Montgomery + Shenzhen
   02_segmentacion.ipynb                      entrenamiento, evaluación y control de calidad de segmentadores
   03_radiomica.ipynb                         revisión de las características radiómicas antes de los clasificadores
+  04_deteccion_tb.ipynb                      entrenamiento y evaluación de los clasificadores de TB, comparación entre técnicas
 ```
 
 ## Referencias
@@ -159,3 +190,6 @@ notebooks/
 S. Jaeger, S. Candemir, S. Antani, Y.-X. J. Wáng, P.-X. Lu, and G. Thoma, "Two public
 chest X-ray datasets for computer-aided screening of pulmonary diseases," *Quant.
 Imaging Med. Surg.*, vol. 4, no. 6, pp. 475–477, 2014.
+
+J. Ma, Y. He, F. Li, L. Han, C. You, and B. Wang, "Segment anything in medical images,"
+*Nat. Commun.*, vol. 15, art. 654, 2024.
