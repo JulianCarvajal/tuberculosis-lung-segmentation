@@ -146,14 +146,15 @@ mismos parámetros, `src/tbseg/radiomics/firstorder.yaml`, así que entre archiv
 
 ### 10. Entrenar y evaluar los clasificadores de TB
 
-Ejecutar el notebook `04_deteccion_tb.ipynb`. Entrena SVM y Random Forest una vez por técnica de
-segmentación, con los CSV del paso anterior y la partición de `segtrain_split.csv`. Elige los
-hiperparámetros con 5 folds internos en train + val, evalúa una sola vez en test y compara todos
-los pares de técnicas con intervalos de confianza por bootstrap pareado. Se detiene si falta el CSV
-de alguna técnica de `METHODS` (sección 1 del notebook).
+Ejecutar el notebook `04_deteccion_tb.ipynb`. Entrena SVM, Random Forest y una red neuronal (MLP)
+una vez por técnica de segmentación, con los CSV del paso anterior y la partición de
+`segtrain_split.csv`. Elige los hiperparámetros con 5 folds internos en train + val, evalúa una sola
+vez en test y compara todos los pares de técnicas con intervalos de confianza por bootstrap pareado.
+Se detiene si falta el CSV de alguna técnica de `METHODS` (sección 1 del notebook).
 
 Escribe en `results/classification/<dataset>/<familias>/`: `cv_metrics.csv`, `best_params.csv`,
-`test_predictions.csv`, `test_metrics.csv`, `test_comparison.csv` e `importances.csv`.
+`test_predictions.csv`, `test_metrics.csv`, `test_comparison.csv`, `importances.csv` y, de la red
+neuronal, `mlp_selection.csv`, `mlp_seeds.csv` y `mlp_variants.csv`.
 
 ### 11. Ejecutar los tests
 
