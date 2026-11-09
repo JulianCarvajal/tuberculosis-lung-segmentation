@@ -1,0 +1,16 @@
+variant,method,auc
+elegida,unet,0.8253698096787303
+elegida,attention_unet,0.8472873293930189
+elegida,medsam,0.7898845206301148
+"capas (128, 64)",unet,0.8232079043871426
+"capas (128, 64)",attention_unet,0.8471605425400301
+"capas (128, 64)",medsam,0.7903727897634738
+optimizador lbfgs,unet,0.7882863926553629
+optimizador lbfgs,attention_unet,0.8042470419829085
+optimizador lbfgs,medsam,0.7502129768523662
+activación tanh,unet,0.819577894646166
+activación tanh,attention_unet,0.8463022688217652
+activación tanh,medsam,0.7900436818370293
+detención temprana,unet,0.7464323416684981
+detención temprana,attention_unet,0.7833784845804601
+detención temprana,medsam,0.7072585843133498
