@@ -6,6 +6,7 @@ La radiografía es la misma para todos los métodos y los parámetros salen del 
 Uso:
     python -m tbseg.radiomics.extract --method unet
     python -m tbseg.radiomics.extract --method attention_unet
+    python -m tbseg.radiomics.extract --method medsam
 
 Salida:
     results/radiomics/<dataset>_firstorder_<método>.csv
