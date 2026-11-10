@@ -5,8 +5,14 @@ de pérdida, el optimizador y el número de épocas son idénticos. Lo único qu
 cambia entre corridas es la arquitectura (--arch) y la semilla (--seed), de modo
 que las diferencias observadas se atribuyan a la arquitectura y no al protocolo.
 
+Arquitecturas:
+    unet, attention_unet   MONAI, entrenadas desde cero
+    deeplabv3plus          segmentation_models_pytorch, encoder ResNet-34 preentrenado
+                           en ImageNet (la forma estándar de usarla en la literatura)
+
 Uso:
     python -m tbseg.segmentation.train --arch unet --seed 42
+    python -m tbseg.segmentation.train --arch deeplabv3plus
     python -m tbseg.segmentation.train --arch unet --smoke   # prueba rápida
 
 Salidas (results/segmentation/ acumula todas las corridas en tres archivos):
@@ -23,6 +29,7 @@ import time
 import cv2
 import numpy as np
 import pandas as pd
+import segmentation_models_pytorch as smp
 import torch
 import torch.nn as nn
 from monai.networks.nets import AttentionUnet, UNet
@@ -42,17 +49,37 @@ BATCH_SIZE = 8
 LEARNING_RATE = 1e-3
 MAX_EPOCHS = 60
 PATIENCE = 10  # épocas sin mejorar el Dice de validación antes de detenerse
-CHANNELS = (16, 32, 64, 128, 256)
-STRIDES = (2, 2, 2, 2)
 THRESHOLD = 0.5
 
+# U-Net y Attention U-Net (MONAI): mismos filtros y mismas reducciones de resolución
+CHANNELS = (16, 32, 64, 128, 256)
+STRIDES = (2, 2, 2, 2)
+MONAI_NETS = {"unet": UNet, "attention_unet": AttentionUnet}
+
+# DeepLabV3+: ResNet-34 es el encoder por defecto de segmentation_models_pytorch y cabe
+# con lotes de 8 imágenes de 512x512 en una GPU de 6 GB (ResNet-50 no deja margen)
+DEEPLAB_ENCODER = "resnet34"
+DEEPLAB_WEIGHTS = "imagenet"
+
 SEG_RESULTS_DIR = RESULTS_DIR / "segmentation"
-ARCHITECTURES = {"unet": UNet, "attention_unet": AttentionUnet}
+ARCHITECTURES = (*MONAI_NETS, "deeplabv3plus")
 
 
-def build_model(arch: str) -> nn.Module:
-    """Crea la red. Ambas arquitecturas reciben exactamente los mismos argumentos."""
-    return ARCHITECTURES[arch](
+def build_model(arch: str, pretrained: bool = True) -> nn.Module:
+    """Crea la red: entrada de 1 canal (escala de grises) y salida de 1 canal (logits de pulmón).
+
+    pretrained solo afecta a DeepLabV3+: con False el encoder empieza al azar. Se usa al
+    cargar pesos ya entrenados (predict.py) y en los tests, para no descargar nada.
+    """
+    if arch == "deeplabv3plus":
+        # Con in_channels=1, smp suma los pesos RGB de la primera convolución preentrenada
+        return smp.DeepLabV3Plus(
+            encoder_name=DEEPLAB_ENCODER,
+            encoder_weights=DEEPLAB_WEIGHTS if pretrained else None,
+            in_channels=1,
+            classes=1,
+        )
+    return MONAI_NETS[arch](
         spatial_dims=2,      # imágenes 2D
         in_channels=1,       # escala de grises
         out_channels=1,      # una clase: pulmón sí o no
@@ -234,9 +261,12 @@ def update_csv(name: str, rows: pd.DataFrame, arch: str, seed: int):
 def save_run(arch, seed, best, history, test_scores):
     """Guarda los pesos y acumula las métricas de la corrida."""
     MODELS_DIR.mkdir(exist_ok=True)
+    if arch == "deeplabv3plus":
+        net_config = {"encoder": DEEPLAB_ENCODER, "encoder_weights": DEEPLAB_WEIGHTS}
+    else:
+        net_config = {"channels": CHANNELS, "strides": STRIDES}
     torch.save({"arch": arch, "seed": seed, "epoch": best["epoch"], "val_dice": best["dice"],
-                "channels": CHANNELS, "strides": STRIDES, "image_size": IMAGE_SIZE,
-                "state_dict": best["state"]},
+                **net_config, "image_size": IMAGE_SIZE, "state_dict": best["state"]},
                MODELS_DIR / f"{arch}_seed{seed}.pt")
 
     summary = pd.DataFrame([{

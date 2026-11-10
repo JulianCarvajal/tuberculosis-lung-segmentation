@@ -103,9 +103,15 @@ estratificados. Ejecutarlo de nuevo produce el mismo archivo.
 ```bash
 python -m tbseg.segmentation.train --arch unet
 python -m tbseg.segmentation.train --arch attention_unet
+python -m tbseg.segmentation.train --arch deeplabv3plus
 python -m tbseg.segmentation.predict --arch unet
 python -m tbseg.segmentation.predict --arch attention_unet
+python -m tbseg.segmentation.predict --arch deeplabv3plus
 ```
+
+U-Net y Attention U-Net (MONAI) se entrenan desde cero. DeepLabV3+ (`segmentation-models-pytorch`)
+usa un encoder ResNet-34 preentrenado en ImageNet, que se descarga la primera vez; el resto del
+protocolo (datos, aumentos, pérdida, optimizador, épocas) es el mismo para las tres.
 
 `--seed` es 42 por defecto. El entrenamiento guarda los pesos en `models/<arch>_seed<semilla>.pt`
 y las métricas en `results/segmentation/`. La predicción escribe las máscaras tal como
@@ -136,6 +142,7 @@ se evalúa es MedSAM con esa caja, no MedSAM en general (`02_segmentacion.ipynb`
 python -m tbseg.radiomics.extract --method unet
 python -m tbseg.radiomics.extract --method attention_unet
 python -m tbseg.radiomics.extract --method medsam
+python -m tbseg.radiomics.extract --method deeplabv3plus
 ```
 
 Escribe una tabla por método de segmentación en
@@ -194,3 +201,6 @@ Imaging Med. Surg.*, vol. 4, no. 6, pp. 475–477, 2014.
 
 J. Ma, Y. He, F. Li, L. Han, C. You, and B. Wang, "Segment anything in medical images,"
 *Nat. Commun.*, vol. 15, art. 654, 2024.
+
+L.-C. Chen, Y. Zhu, G. Papandreou, F. Schroff, and H. Adam, "Encoder-decoder with atrous
+separable convolution for semantic image segmentation," in *Proc. ECCV*, 2018, pp. 801–818.

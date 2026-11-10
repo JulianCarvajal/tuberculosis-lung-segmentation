@@ -37,8 +37,9 @@ def test_overlap_metrics_extremes():
 
 def test_models_return_one_channel_same_size():
     x = torch.randn(1, 1, 64, 64)
-    for arch in ("unet", "attention_unet"):
-        assert build_model(arch)(x).shape == (1, 1, 64, 64)
+    for arch in train.ARCHITECTURES:
+        model = build_model(arch, pretrained=False).eval()  # eval: BatchNorm acepta lotes de 1
+        assert model(x).shape == (1, 1, 64, 64)
 
 
 def test_update_csv_replaces_whole_run(tmp_path, monkeypatch):
