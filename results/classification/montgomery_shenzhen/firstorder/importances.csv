@@ -50,3 +50,20 @@ random_forest,medsam,RootMeanSquared,Posición,0.05733565318950856
 random_forest,medsam,Skewness,Sin grupo,0.05784552563523247
 random_forest,medsam,Uniformity,Complejidad,0.04192190996183233
 random_forest,medsam,Variance,Dispersión,0.04357770169808071
+random_forest,deeplabv3plus,10Percentile,Posición,0.02959871864373355
+random_forest,deeplabv3plus,90Percentile,Sin grupo,0.0495236091569842
+random_forest,deeplabv3plus,Energy,Magnitud,0.108670902914574
+random_forest,deeplabv3plus,Entropy,Complejidad,0.038895320601585404
+random_forest,deeplabv3plus,InterquartileRange,Dispersión,0.0977700838067308
+random_forest,deeplabv3plus,Kurtosis,Sin grupo,0.06880373375877624
+random_forest,deeplabv3plus,Maximum,Sin grupo,0.07701410055281117
+random_forest,deeplabv3plus,MeanAbsoluteDeviation,Dispersión,0.062158463130933594
+random_forest,deeplabv3plus,Mean,Posición,0.026345908961016018
+random_forest,deeplabv3plus,Median,Posición,0.029742203048312484
+random_forest,deeplabv3plus,Minimum,Sin grupo,0.04205210409721214
+random_forest,deeplabv3plus,Range,Sin grupo,0.097182631517948
+random_forest,deeplabv3plus,RobustMeanAbsoluteDeviation,Dispersión,0.10418188693024627
+random_forest,deeplabv3plus,RootMeanSquared,Posición,0.026406065242620926
+random_forest,deeplabv3plus,Skewness,Sin grupo,0.05509579820403353
+random_forest,deeplabv3plus,Uniformity,Complejidad,0.039339420797739305
+random_forest,deeplabv3plus,Variance,Dispersión,0.04721904863474253

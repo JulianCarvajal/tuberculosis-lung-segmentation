@@ -6,6 +6,7 @@ lo que se estudia es el efecto de cada técnica de segmentación tal cual.
 Uso:
     python -m tbseg.segmentation.predict --arch unet
     python -m tbseg.segmentation.predict --arch attention_unet --seed 43
+    python -m tbseg.segmentation.predict --arch deeplabv3plus
     python -m tbseg.segmentation.predict --arch medsam
 
 Salidas:
@@ -46,7 +47,7 @@ def method_name(arch: str, seed: int) -> str:
 
 def load_model(arch: str, seed: int, device: str) -> torch.nn.Module:
     checkpoint = torch.load(MODELS_DIR / f"{arch}_seed{seed}.pt", map_location=device)
-    model = build_model(arch)
+    model = build_model(arch, pretrained=False)  # los pesos salen del checkpoint
     model.load_state_dict(checkpoint["state_dict"])
     return model.to(device).eval()
 

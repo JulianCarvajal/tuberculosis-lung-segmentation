@@ -10,6 +10,8 @@ scipy==1.15.3
 scikit-learn==1.7.2
 torch==2.14.0
 monai==1.6.0
+# DeepLabV3+ con encoder preentrenado (usa torchvision y timm)
+segmentation-models-pytorch==0.6.0
 # MedSAM: its weights load with Meta's SAM code, which is not on PyPI and imports torchvision
 torchvision==0.29.0
 segment-anything @ git+https://github.com/facebookresearch/segment-anything.git@dca509fe793f601edb92606367a655c15ac00fdf

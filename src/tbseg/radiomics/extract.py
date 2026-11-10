@@ -7,6 +7,7 @@ Uso:
     python -m tbseg.radiomics.extract --method unet
     python -m tbseg.radiomics.extract --method attention_unet
     python -m tbseg.radiomics.extract --method medsam
+    python -m tbseg.radiomics.extract --method deeplabv3plus
 
 Salida:
     results/radiomics/<dataset>_firstorder_<método>.csv
