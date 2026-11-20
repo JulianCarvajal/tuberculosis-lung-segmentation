@@ -1,0 +1,28 @@
+dataset,model,par,cambios,n,%
+tbx11k,svm,U-Net: entre semillas,13.6,320,4.25
+tbx11k,svm,Attention U-Net: entre semillas,10.2,320,3.1875
+tbx11k,svm,DeepLabV3+: entre semillas,11.4,320,3.5625000000000004
+tbx11k,svm,U-Net vs Attention U-Net,14.6,320,4.5625
+tbx11k,svm,U-Net vs DeepLabV3+,17.0,320,5.3125
+tbx11k,svm,Attention U-Net vs DeepLabV3+,12.0,320,3.75
+tbx11k,svm,MedSAM vs U-Net,36.8,320,11.5
+tbx11k,svm,MedSAM vs Attention U-Net,37.0,320,11.5625
+tbx11k,svm,MedSAM vs DeepLabV3+,35.4,320,11.0625
+tbx11k,random_forest,U-Net: entre semillas,13.4,320,4.1875
+tbx11k,random_forest,Attention U-Net: entre semillas,10.6,320,3.3125
+tbx11k,random_forest,DeepLabV3+: entre semillas,11.4,320,3.5625000000000004
+tbx11k,random_forest,U-Net vs Attention U-Net,14.0,320,4.375
+tbx11k,random_forest,U-Net vs DeepLabV3+,16.2,320,5.0625
+tbx11k,random_forest,Attention U-Net vs DeepLabV3+,13.0,320,4.0625
+tbx11k,random_forest,MedSAM vs U-Net,33.2,320,10.375
+tbx11k,random_forest,MedSAM vs Attention U-Net,33.2,320,10.375
+tbx11k,random_forest,MedSAM vs DeepLabV3+,29.4,320,9.1875
+tbx11k,mlp,U-Net: entre semillas,15.0,320,4.6875
+tbx11k,mlp,Attention U-Net: entre semillas,10.6,320,3.3125
+tbx11k,mlp,DeepLabV3+: entre semillas,11.2,320,3.4999999999999996
+tbx11k,mlp,U-Net vs Attention U-Net,15.6,320,4.875
+tbx11k,mlp,U-Net vs DeepLabV3+,15.8,320,4.9375
+tbx11k,mlp,Attention U-Net vs DeepLabV3+,11.0,320,3.4375000000000004
+tbx11k,mlp,MedSAM vs U-Net,31.6,320,9.875
+tbx11k,mlp,MedSAM vs Attention U-Net,29.6,320,9.25
+tbx11k,mlp,MedSAM vs DeepLabV3+,29.4,320,9.1875
