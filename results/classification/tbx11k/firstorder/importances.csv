@@ -1,0 +1,273 @@
+dataset,model,method,technique,feature,group,importance
+tbx11k,random_forest,unet,unet,10Percentile,Posición,0.021667614441229974
+tbx11k,random_forest,unet,unet,90Percentile,Sin grupo,0.03442549910477712
+tbx11k,random_forest,unet,unet,Energy,Magnitud,0.05299308170754305
+tbx11k,random_forest,unet,unet,Entropy,Complejidad,0.12879591373411653
+tbx11k,random_forest,unet,unet,InterquartileRange,Dispersión,0.08099341759056877
+tbx11k,random_forest,unet,unet,Kurtosis,Sin grupo,0.18331415621927988
+tbx11k,random_forest,unet,unet,Maximum,Sin grupo,0.034702027400232725
+tbx11k,random_forest,unet,unet,MeanAbsoluteDeviation,Dispersión,0.05779841817746688
+tbx11k,random_forest,unet,unet,Mean,Posición,0.017035674433022525
+tbx11k,random_forest,unet,unet,Median,Posición,0.02055729390891251
+tbx11k,random_forest,unet,unet,Minimum,Sin grupo,0.019670447637080837
+tbx11k,random_forest,unet,unet,Range,Sin grupo,0.05395029152675047
+tbx11k,random_forest,unet,unet,RobustMeanAbsoluteDeviation,Dispersión,0.07284830912056618
+tbx11k,random_forest,unet,unet,RootMeanSquared,Posición,0.01776036051616342
+tbx11k,random_forest,unet,unet,Skewness,Sin grupo,0.0500312392357611
+tbx11k,random_forest,unet,unet,Uniformity,Complejidad,0.10203625145648053
+tbx11k,random_forest,unet,unet,Variance,Dispersión,0.05142000379004772
+tbx11k,random_forest,unet_seed43,unet,10Percentile,Posición,0.011918103279120807
+tbx11k,random_forest,unet_seed43,unet,90Percentile,Sin grupo,0.025864846513452094
+tbx11k,random_forest,unet_seed43,unet,Energy,Magnitud,0.07157339036680224
+tbx11k,random_forest,unet_seed43,unet,Entropy,Complejidad,0.1424785584751304
+tbx11k,random_forest,unet_seed43,unet,InterquartileRange,Dispersión,0.05383313201525681
+tbx11k,random_forest,unet_seed43,unet,Kurtosis,Sin grupo,0.33841072687039797
+tbx11k,random_forest,unet_seed43,unet,Maximum,Sin grupo,0.029098643811226257
+tbx11k,random_forest,unet_seed43,unet,MeanAbsoluteDeviation,Dispersión,0.02505416188950225
+tbx11k,random_forest,unet_seed43,unet,Mean,Posición,0.009933257616737178
+tbx11k,random_forest,unet_seed43,unet,Median,Posición,0.011118492579439514
+tbx11k,random_forest,unet_seed43,unet,Minimum,Sin grupo,0.01429185497499613
+tbx11k,random_forest,unet_seed43,unet,Range,Sin grupo,0.03437414696480239
+tbx11k,random_forest,unet_seed43,unet,RobustMeanAbsoluteDeviation,Dispersión,0.05736304696920467
+tbx11k,random_forest,unet_seed43,unet,RootMeanSquared,Posición,0.010218846949832053
+tbx11k,random_forest,unet_seed43,unet,Skewness,Sin grupo,0.0490633370401203
+tbx11k,random_forest,unet_seed43,unet,Uniformity,Complejidad,0.092525225902056
+tbx11k,random_forest,unet_seed43,unet,Variance,Dispersión,0.022880227781922786
+tbx11k,random_forest,unet_seed44,unet,10Percentile,Posición,0.012266501402385208
+tbx11k,random_forest,unet_seed44,unet,90Percentile,Sin grupo,0.015860891352126514
+tbx11k,random_forest,unet_seed44,unet,Energy,Magnitud,0.10301796726977651
+tbx11k,random_forest,unet_seed44,unet,Entropy,Complejidad,0.14869929742745852
+tbx11k,random_forest,unet_seed44,unet,InterquartileRange,Dispersión,0.045186090720369644
+tbx11k,random_forest,unet_seed44,unet,Kurtosis,Sin grupo,0.31512709851527354
+tbx11k,random_forest,unet_seed44,unet,Maximum,Sin grupo,0.035183066759639565
+tbx11k,random_forest,unet_seed44,unet,MeanAbsoluteDeviation,Dispersión,0.025141233780438237
+tbx11k,random_forest,unet_seed44,unet,Mean,Posición,0.009349019956293655
+tbx11k,random_forest,unet_seed44,unet,Median,Posición,0.010110703959018126
+tbx11k,random_forest,unet_seed44,unet,Minimum,Sin grupo,0.01529781330081704
+tbx11k,random_forest,unet_seed44,unet,Range,Sin grupo,0.03769477471616703
+tbx11k,random_forest,unet_seed44,unet,RobustMeanAbsoluteDeviation,Dispersión,0.056237471772912856
+tbx11k,random_forest,unet_seed44,unet,RootMeanSquared,Posición,0.008410039059864323
+tbx11k,random_forest,unet_seed44,unet,Skewness,Sin grupo,0.043049098397668024
+tbx11k,random_forest,unet_seed44,unet,Uniformity,Complejidad,0.10022566154919624
+tbx11k,random_forest,unet_seed44,unet,Variance,Dispersión,0.019143270060595078
+tbx11k,random_forest,unet_seed45,unet,10Percentile,Posición,0.013904358101354567
+tbx11k,random_forest,unet_seed45,unet,90Percentile,Sin grupo,0.02356621001351047
+tbx11k,random_forest,unet_seed45,unet,Energy,Magnitud,0.07658830761548928
+tbx11k,random_forest,unet_seed45,unet,Entropy,Complejidad,0.15745419170942532
+tbx11k,random_forest,unet_seed45,unet,InterquartileRange,Dispersión,0.06287864782555873
+tbx11k,random_forest,unet_seed45,unet,Kurtosis,Sin grupo,0.2986708802586039
+tbx11k,random_forest,unet_seed45,unet,Maximum,Sin grupo,0.03307494840297678
+tbx11k,random_forest,unet_seed45,unet,MeanAbsoluteDeviation,Dispersión,0.025413125327691164
+tbx11k,random_forest,unet_seed45,unet,Mean,Posición,0.010398763720068552
+tbx11k,random_forest,unet_seed45,unet,Median,Posición,0.012810768403697477
+tbx11k,random_forest,unet_seed45,unet,Minimum,Sin grupo,0.01697176411364603
+tbx11k,random_forest,unet_seed45,unet,Range,Sin grupo,0.04035237363123046
+tbx11k,random_forest,unet_seed45,unet,RobustMeanAbsoluteDeviation,Dispersión,0.06322432941591304
+tbx11k,random_forest,unet_seed45,unet,RootMeanSquared,Posición,0.010064227287795808
+tbx11k,random_forest,unet_seed45,unet,Skewness,Sin grupo,0.04192773437317438
+tbx11k,random_forest,unet_seed45,unet,Uniformity,Complejidad,0.09253607327006604
+tbx11k,random_forest,unet_seed45,unet,Variance,Dispersión,0.02016329652979804
+tbx11k,random_forest,unet_seed46,unet,10Percentile,Posición,0.012826689694971782
+tbx11k,random_forest,unet_seed46,unet,90Percentile,Sin grupo,0.022873384307684243
+tbx11k,random_forest,unet_seed46,unet,Energy,Magnitud,0.10041476582959241
+tbx11k,random_forest,unet_seed46,unet,Entropy,Complejidad,0.20225501947964905
+tbx11k,random_forest,unet_seed46,unet,InterquartileRange,Dispersión,0.05031611587915033
+tbx11k,random_forest,unet_seed46,unet,Kurtosis,Sin grupo,0.22122510200664675
+tbx11k,random_forest,unet_seed46,unet,Maximum,Sin grupo,0.03109199302605371
+tbx11k,random_forest,unet_seed46,unet,MeanAbsoluteDeviation,Dispersión,0.028884291994620875
+tbx11k,random_forest,unet_seed46,unet,Mean,Posición,0.00958509682442885
+tbx11k,random_forest,unet_seed46,unet,Median,Posición,0.011863226773848818
+tbx11k,random_forest,unet_seed46,unet,Minimum,Sin grupo,0.01858965169889606
+tbx11k,random_forest,unet_seed46,unet,Range,Sin grupo,0.05058166268160281
+tbx11k,random_forest,unet_seed46,unet,RobustMeanAbsoluteDeviation,Dispersión,0.053403866197996586
+tbx11k,random_forest,unet_seed46,unet,RootMeanSquared,Posición,0.010072320457727973
+tbx11k,random_forest,unet_seed46,unet,Skewness,Sin grupo,0.04348695369631909
+tbx11k,random_forest,unet_seed46,unet,Uniformity,Complejidad,0.1113564436468108
+tbx11k,random_forest,unet_seed46,unet,Variance,Dispersión,0.021173415803999937
+tbx11k,random_forest,attention_unet,attention_unet,10Percentile,Posición,0.006172022877213487
+tbx11k,random_forest,attention_unet,attention_unet,90Percentile,Sin grupo,0.007502411787156902
+tbx11k,random_forest,attention_unet,attention_unet,Energy,Magnitud,0.059521396407165285
+tbx11k,random_forest,attention_unet,attention_unet,Entropy,Complejidad,0.17485836027917412
+tbx11k,random_forest,attention_unet,attention_unet,InterquartileRange,Dispersión,0.04499853142459833
+tbx11k,random_forest,attention_unet,attention_unet,Kurtosis,Sin grupo,0.4281876472915063
+tbx11k,random_forest,attention_unet,attention_unet,Maximum,Sin grupo,0.016669213981097664
+tbx11k,random_forest,attention_unet,attention_unet,MeanAbsoluteDeviation,Dispersión,0.012460880071948097
+tbx11k,random_forest,attention_unet,attention_unet,Mean,Posición,0.0036460307578594685
+tbx11k,random_forest,attention_unet,attention_unet,Median,Posición,0.005191565951824389
+tbx11k,random_forest,attention_unet,attention_unet,Minimum,Sin grupo,0.007027890210129083
+tbx11k,random_forest,attention_unet,attention_unet,Range,Sin grupo,0.02850427290062893
+tbx11k,random_forest,attention_unet,attention_unet,RobustMeanAbsoluteDeviation,Dispersión,0.04622185706331563
+tbx11k,random_forest,attention_unet,attention_unet,RootMeanSquared,Posición,0.0040753118975925835
+tbx11k,random_forest,attention_unet,attention_unet,Skewness,Sin grupo,0.03511981473266933
+tbx11k,random_forest,attention_unet,attention_unet,Uniformity,Complejidad,0.10952775270136761
+tbx11k,random_forest,attention_unet,attention_unet,Variance,Dispersión,0.010315039664752732
+tbx11k,random_forest,attention_unet_seed43,attention_unet,10Percentile,Posición,0.005707926846923064
+tbx11k,random_forest,attention_unet_seed43,attention_unet,90Percentile,Sin grupo,0.013017513318874768
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Energy,Magnitud,0.07535275104290629
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Entropy,Complejidad,0.15650668007931803
+tbx11k,random_forest,attention_unet_seed43,attention_unet,InterquartileRange,Dispersión,0.04975373919191139
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Kurtosis,Sin grupo,0.37515445858381
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Maximum,Sin grupo,0.018005354822445464
+tbx11k,random_forest,attention_unet_seed43,attention_unet,MeanAbsoluteDeviation,Dispersión,0.016628757287721136
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Mean,Posición,0.004363694541523199
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Median,Posición,0.006833355163254918
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Minimum,Sin grupo,0.00695162945167272
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Range,Sin grupo,0.036869033371750834
+tbx11k,random_forest,attention_unet_seed43,attention_unet,RobustMeanAbsoluteDeviation,Dispersión,0.06329102867442703
+tbx11k,random_forest,attention_unet_seed43,attention_unet,RootMeanSquared,Posición,0.005120383241946808
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Skewness,Sin grupo,0.031659537339576625
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Uniformity,Complejidad,0.12115902220080084
+tbx11k,random_forest,attention_unet_seed43,attention_unet,Variance,Dispersión,0.013625134841136914
+tbx11k,random_forest,attention_unet_seed44,attention_unet,10Percentile,Posición,0.009528816775642096
+tbx11k,random_forest,attention_unet_seed44,attention_unet,90Percentile,Sin grupo,0.014093484559453202
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Energy,Magnitud,0.0708401869778664
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Entropy,Complejidad,0.1606715173612888
+tbx11k,random_forest,attention_unet_seed44,attention_unet,InterquartileRange,Dispersión,0.04953259548421055
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Kurtosis,Sin grupo,0.36366710798979485
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Maximum,Sin grupo,0.026484373609444813
+tbx11k,random_forest,attention_unet_seed44,attention_unet,MeanAbsoluteDeviation,Dispersión,0.022454259117925895
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Mean,Posición,0.007469370576590098
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Median,Posición,0.008619354695574564
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Minimum,Sin grupo,0.010942718548344766
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Range,Sin grupo,0.03448468216416113
+tbx11k,random_forest,attention_unet_seed44,attention_unet,RobustMeanAbsoluteDeviation,Dispersión,0.050994702731182194
+tbx11k,random_forest,attention_unet_seed44,attention_unet,RootMeanSquared,Posición,0.006781862110580873
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Skewness,Sin grupo,0.04506897269066459
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Uniformity,Complejidad,0.10265305962679334
+tbx11k,random_forest,attention_unet_seed44,attention_unet,Variance,Dispersión,0.015712934980481943
+tbx11k,random_forest,attention_unet_seed45,attention_unet,10Percentile,Posición,0.005769178690568818
+tbx11k,random_forest,attention_unet_seed45,attention_unet,90Percentile,Sin grupo,0.008858158105154126
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Energy,Magnitud,0.04980137409085167
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Entropy,Complejidad,0.14654712073954
+tbx11k,random_forest,attention_unet_seed45,attention_unet,InterquartileRange,Dispersión,0.05452335977951864
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Kurtosis,Sin grupo,0.4206961690635749
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Maximum,Sin grupo,0.01839387263893617
+tbx11k,random_forest,attention_unet_seed45,attention_unet,MeanAbsoluteDeviation,Dispersión,0.017524383719480858
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Mean,Posición,0.0037677966369206186
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Median,Posición,0.0049447089415450615
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Minimum,Sin grupo,0.006424404952180623
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Range,Sin grupo,0.027874576850800997
+tbx11k,random_forest,attention_unet_seed45,attention_unet,RobustMeanAbsoluteDeviation,Dispersión,0.05432140964407455
+tbx11k,random_forest,attention_unet_seed45,attention_unet,RootMeanSquared,Posición,0.0037779496032952333
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Skewness,Sin grupo,0.04066777177138355
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Uniformity,Complejidad,0.12326898951104545
+tbx11k,random_forest,attention_unet_seed45,attention_unet,Variance,Dispersión,0.012838775261128713
+tbx11k,random_forest,attention_unet_seed46,attention_unet,10Percentile,Posición,0.0062897488453639
+tbx11k,random_forest,attention_unet_seed46,attention_unet,90Percentile,Sin grupo,0.010283698669626827
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Energy,Magnitud,0.06795359280407406
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Entropy,Complejidad,0.1629345322566453
+tbx11k,random_forest,attention_unet_seed46,attention_unet,InterquartileRange,Dispersión,0.04397402944900336
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Kurtosis,Sin grupo,0.4042561950696981
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Maximum,Sin grupo,0.02110855913010656
+tbx11k,random_forest,attention_unet_seed46,attention_unet,MeanAbsoluteDeviation,Dispersión,0.016822553107795863
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Mean,Posición,0.0046348865532351725
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Median,Posición,0.00600968902004681
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Minimum,Sin grupo,0.008569921282230254
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Range,Sin grupo,0.035230159034772945
+tbx11k,random_forest,attention_unet_seed46,attention_unet,RobustMeanAbsoluteDeviation,Dispersión,0.04481420074331356
+tbx11k,random_forest,attention_unet_seed46,attention_unet,RootMeanSquared,Posición,0.00536670689589304
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Skewness,Sin grupo,0.042028344751977725
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Uniformity,Complejidad,0.10736320506215812
+tbx11k,random_forest,attention_unet_seed46,attention_unet,Variance,Dispersión,0.012359977324058484
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,10Percentile,Posición,0.010078065495834194
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,90Percentile,Sin grupo,0.016332604945475733
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Energy,Magnitud,0.05381738880634413
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Entropy,Complejidad,0.15652104959957147
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,InterquartileRange,Dispersión,0.05198012488480999
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Kurtosis,Sin grupo,0.34864373722621556
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Maximum,Sin grupo,0.027959943914478227
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,MeanAbsoluteDeviation,Dispersión,0.02386407284170263
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Mean,Posición,0.008139241419830896
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Median,Posición,0.010786013049721578
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Minimum,Sin grupo,0.014015968616746696
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Range,Sin grupo,0.037893785394424305
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,RobustMeanAbsoluteDeviation,Dispersión,0.05640760310813723
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,RootMeanSquared,Posición,0.007776746774864802
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Skewness,Sin grupo,0.04773524612646953
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Uniformity,Complejidad,0.110116167105779
+tbx11k,random_forest,deeplabv3plus,deeplabv3plus,Variance,Dispersión,0.017932240689594144
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,10Percentile,Posición,0.010921046913194331
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,90Percentile,Sin grupo,0.014648386946123452
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Energy,Magnitud,0.06468576547887284
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Entropy,Complejidad,0.175060804919777
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,InterquartileRange,Dispersión,0.05195599553998406
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Kurtosis,Sin grupo,0.3103435605638255
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Maximum,Sin grupo,0.02706886182870812
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,MeanAbsoluteDeviation,Dispersión,0.02839521787403792
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Mean,Posición,0.008632560443160622
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Median,Posición,0.01115215073967013
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Minimum,Sin grupo,0.014343442225324842
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Range,Sin grupo,0.04739918169646687
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,RobustMeanAbsoluteDeviation,Dispersión,0.05325468008351768
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,RootMeanSquared,Posición,0.008245472552093104
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Skewness,Sin grupo,0.04776620878940516
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Uniformity,Complejidad,0.10657539465244971
+tbx11k,random_forest,deeplabv3plus_seed43,deeplabv3plus,Variance,Dispersión,0.019551268753388543
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,10Percentile,Posición,0.010231464575164424
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,90Percentile,Sin grupo,0.014966481880413466
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Energy,Magnitud,0.061109656750889134
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Entropy,Complejidad,0.21381108204900573
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,InterquartileRange,Dispersión,0.05513731877320716
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Kurtosis,Sin grupo,0.2970496559235095
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Maximum,Sin grupo,0.026270243302710484
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,MeanAbsoluteDeviation,Dispersión,0.025951254667636748
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Mean,Posición,0.008773755346263255
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Median,Posición,0.010918874313402044
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Minimum,Sin grupo,0.012885280347496598
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Range,Sin grupo,0.03168019291626132
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,RobustMeanAbsoluteDeviation,Dispersión,0.05048253683504376
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,RootMeanSquared,Posición,0.008701952612550499
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Skewness,Sin grupo,0.04407271258803674
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Uniformity,Complejidad,0.10509925986374025
+tbx11k,random_forest,deeplabv3plus_seed44,deeplabv3plus,Variance,Dispersión,0.022858277254668918
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,10Percentile,Posición,0.0051272762792479365
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,90Percentile,Sin grupo,0.010369318614679324
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Energy,Magnitud,0.05608605486640588
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Entropy,Complejidad,0.20745094388924867
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,InterquartileRange,Dispersión,0.058322972121895564
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Kurtosis,Sin grupo,0.3486920479330311
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Maximum,Sin grupo,0.01673487402229531
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,MeanAbsoluteDeviation,Dispersión,0.019652530213434067
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Mean,Posición,0.0033165321379507637
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Median,Posición,0.004994014243801063
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Minimum,Sin grupo,0.007509503780536041
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Range,Sin grupo,0.03249240158518068
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,RobustMeanAbsoluteDeviation,Dispersión,0.054855664507627765
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,RootMeanSquared,Posición,0.004574243711240777
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Skewness,Sin grupo,0.040243898059532976
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Uniformity,Complejidad,0.11260682022166925
+tbx11k,random_forest,deeplabv3plus_seed45,deeplabv3plus,Variance,Dispersión,0.01697090381222292
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,10Percentile,Posición,0.008401328529106921
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,90Percentile,Sin grupo,0.011087084617411423
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Energy,Magnitud,0.051985903110920724
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Entropy,Complejidad,0.17067554544172472
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,InterquartileRange,Dispersión,0.05977554946924402
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Kurtosis,Sin grupo,0.34365951871721473
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Maximum,Sin grupo,0.02494283068192221
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,MeanAbsoluteDeviation,Dispersión,0.024730432018105885
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Mean,Posición,0.006263229627266194
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Median,Posición,0.010093256004375967
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Minimum,Sin grupo,0.012735051994617726
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Range,Sin grupo,0.03134638453952534
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,RobustMeanAbsoluteDeviation,Dispersión,0.05982604460470538
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,RootMeanSquared,Posición,0.006800311540130131
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Skewness,Sin grupo,0.0484672548724263
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Uniformity,Complejidad,0.1104884322805187
+tbx11k,random_forest,deeplabv3plus_seed46,deeplabv3plus,Variance,Dispersión,0.018721841950783736
+tbx11k,random_forest,medsam,medsam,10Percentile,Posición,0.03508493882883231
+tbx11k,random_forest,medsam,medsam,90Percentile,Sin grupo,0.06640350832820188
+tbx11k,random_forest,medsam,medsam,Energy,Magnitud,0.03716372181013954
+tbx11k,random_forest,medsam,medsam,Entropy,Complejidad,0.08457241270555503
+tbx11k,random_forest,medsam,medsam,InterquartileRange,Dispersión,0.06498676184481728
+tbx11k,random_forest,medsam,medsam,Kurtosis,Sin grupo,0.1465565028951542
+tbx11k,random_forest,medsam,medsam,Maximum,Sin grupo,0.08588755800676028
+tbx11k,random_forest,medsam,medsam,MeanAbsoluteDeviation,Dispersión,0.03641113125460382
+tbx11k,random_forest,medsam,medsam,Mean,Posición,0.03348279647000604
+tbx11k,random_forest,medsam,medsam,Median,Posición,0.034745967264999573
+tbx11k,random_forest,medsam,medsam,Minimum,Sin grupo,0.02866853300589358
+tbx11k,random_forest,medsam,medsam,Range,Sin grupo,0.061158046588630006
+tbx11k,random_forest,medsam,medsam,RobustMeanAbsoluteDeviation,Dispersión,0.05045119225727585
+tbx11k,random_forest,medsam,medsam,RootMeanSquared,Posición,0.02987959373811661
+tbx11k,random_forest,medsam,medsam,Skewness,Sin grupo,0.06485157651002436
+tbx11k,random_forest,medsam,medsam,Uniformity,Complejidad,0.09933277625812648
+tbx11k,random_forest,medsam,medsam,Variance,Dispersión,0.04036298223286321

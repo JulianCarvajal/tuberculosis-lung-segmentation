@@ -1,0 +1,21 @@
+dataset,variant,method,auc
+tbx11k,elegida,unet,0.9659423828125
+tbx11k,elegida,attention_unet,0.976953125
+tbx11k,elegida,deeplabv3plus,0.969921875
+tbx11k,elegida,medsam,0.94638671875
+tbx11k,"capas (128, 64)",unet,0.96177978515625
+tbx11k,"capas (128, 64)",attention_unet,0.97447509765625
+tbx11k,"capas (128, 64)",deeplabv3plus,0.9695556640625
+tbx11k,"capas (128, 64)",medsam,0.942236328125
+tbx11k,optimizador lbfgs,unet,0.96146240234375
+tbx11k,optimizador lbfgs,attention_unet,0.967578125
+tbx11k,optimizador lbfgs,deeplabv3plus,0.957666015625
+tbx11k,optimizador lbfgs,medsam,0.932269287109375
+tbx11k,activación tanh,unet,0.9642578125
+tbx11k,activación tanh,attention_unet,0.97476806640625
+tbx11k,activación tanh,deeplabv3plus,0.96524658203125
+tbx11k,activación tanh,medsam,0.94461669921875
+tbx11k,detención temprana,unet,0.91748046875
+tbx11k,detención temprana,attention_unet,0.94720458984375
+tbx11k,detención temprana,deeplabv3plus,0.94635009765625
+tbx11k,detención temprana,medsam,0.905322265625
