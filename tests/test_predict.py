@@ -29,3 +29,14 @@ def test_mask_qc_detects_single_lung_and_blobs():
 def test_mask_qc_empty_mask():
     qc = mask_qc(np.zeros((32, 32), dtype=np.uint8))
     assert qc["area_frac"] == 0 and qc["n_components"] == 0 and not qc["two_sides"]
+
+
+def test_datasets_share_label_columns():
+    # extract.py y los clasificadores esperan las mismas columnas en todos los datasets
+    from tbseg.segmentation.predict import DATASETS, LABEL_COLUMNS
+
+    for name, dataset in DATASETS.items():
+        labels = dataset["labels"]()
+        assert list(labels.columns) == LABEL_COLUMNS, name
+        assert labels["image_id"].is_unique, name
+        assert set(labels["split"]) <= {"train", "val", "test"}, name

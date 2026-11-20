@@ -63,7 +63,7 @@ def main():
 
     dataset = DATASETS[args.dataset]
     mask_dir = MASKS_DIR / args.dataset / args.method
-    labels = pd.read_csv(dataset["split"])[["image_id", "patient_id", "source", "tb", "split"]]
+    labels = dataset["labels"]()
     labels = labels.sort_values("image_id", ignore_index=True)
     missing = [i for i in labels["image_id"] if not (mask_dir / f"{i}.png").exists()]
     if missing:

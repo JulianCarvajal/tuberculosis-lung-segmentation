@@ -8,6 +8,7 @@ Uso:
     python -m tbseg.segmentation.predict --arch attention_unet --seed 43
     python -m tbseg.segmentation.predict --arch deeplabv3plus
     python -m tbseg.segmentation.predict --arch medsam
+    python -m tbseg.segmentation.predict --arch unet --seed 44 --dataset tbx11k
 
 Salidas:
     masks/<dataset>/<método>/<image_id>.png   binaria (0/255), 512x512
@@ -26,17 +27,27 @@ import pandas as pd
 import torch
 from tqdm import tqdm
 
-from tbseg.config import MASKS_DIR, MODELS_DIR, SEED, SEGTRAIN_CSV, SEGTRAIN_DIR
+from tbseg.config import MASKS_DIR, MODELS_DIR, SEED, SEGTRAIN_CSV, SEGTRAIN_DIR, TBX11K_PROCESSED_DIR
+from tbseg.data import load_labels
 from tbseg.segmentation import medsam
 from tbseg.segmentation.train import ARCHITECTURES, BATCH_SIZE, THRESHOLD, build_model, update_csv
 
-# Por ahora solo Montgomery-Shenzhen; TBX11K se agrega aquí cuando se procese.
-# images: carpeta de radiografías 512x512 | manual: máscaras de referencia (None si no hay)
+LABEL_COLUMNS = ["image_id", "patient_id", "source", "tb", "split"]
+
+# images: carpeta de radiografías 512x512 en gris, <image_id>.png
+# manual: máscaras de referencia (None si no hay)
+# labels: función que devuelve LABEL_COLUMNS, una fila por imagen
+# TBX11K no tiene máscaras manuales: sus imágenes salen de python -m tbseg.data
 DATASETS = {
     "montgomery_shenzhen": {
         "images": SEGTRAIN_DIR / "images",
         "manual": SEGTRAIN_DIR / "masks",
-        "split": SEGTRAIN_CSV,
+        "labels": lambda: pd.read_csv(SEGTRAIN_CSV)[LABEL_COLUMNS],
+    },
+    "tbx11k": {
+        "images": TBX11K_PROCESSED_DIR / "images",
+        "manual": None,
+        "labels": load_labels,
     },
 }
 
@@ -106,6 +117,8 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
 
     image_paths = sorted(dataset["images"].glob("*.png"))
+    if not image_paths:
+        raise FileNotFoundError(f"No hay imágenes en {dataset['images']}")
     rows = []
     if args.arch == medsam.MEDSAM:
         masks = medsam.predict_masks(image_paths, device)
@@ -119,8 +132,7 @@ def main():
         rows.append({"image_id": path.stem, **mask_qc(mask, manual)})
 
     qc = pd.DataFrame(rows)
-    if dataset["split"] is not None:
-        qc = qc.merge(pd.read_csv(dataset["split"])[["image_id", "split"]], on="image_id", how="left")
+    qc = qc.merge(dataset["labels"]()[["image_id", "split"]], on="image_id", how="left")
     qc.insert(0, "arch", args.arch)
     qc.insert(1, "seed", args.seed)
     update_csv(f"mask_qc_{args.dataset}.csv", qc, args.arch, args.seed)
