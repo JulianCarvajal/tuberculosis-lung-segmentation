@@ -1,6 +1,6 @@
 import pandas as pd
 
-from tbseg.config import N_FOLDS, SUBSET_SIZES
+from tbseg.config import SUBSET_SIZES, SUBSET_TEST_SIZE
 from tbseg.data import build_subset
 
 
@@ -12,9 +12,9 @@ def make_index(n_per_class=1000, n_dup_pairs=50):
         for i in range(n_per_class)
     ]
     index = pd.DataFrame(rows)
-    # Las primeras n_dup_pairs imágenes de 'sick' son copias de las siguientes
-    sick = index.index[index["source_class"] == "sick"]
-    index.loc[sick[:n_dup_pairs], "md5"] = index.loc[sick[n_dup_pairs:2 * n_dup_pairs], "md5"].to_numpy()
+    # Las primeras n_dup_pairs imágenes sanas son copias de las siguientes
+    health = index.index[index["source_class"] == "health"]
+    index.loc[health[:n_dup_pairs], "md5"] = index.loc[health[n_dup_pairs:2 * n_dup_pairs], "md5"].to_numpy()
     return index
 
 
@@ -27,12 +27,12 @@ def test_subset_sizes_and_no_duplicates():
     assert md5.is_unique
 
 
-def test_folds_are_balanced_per_class():
+def test_split_is_stratified_per_class():
     subset = build_subset(make_index())
-    counts = pd.crosstab(subset["fold"], subset["source_class"])
-    assert sorted(counts.index) == list(range(N_FOLDS))
+    assert set(subset["split"]) == {"train", "test"}
+    counts = pd.crosstab(subset["split"], subset["source_class"])
     for cls, n in SUBSET_SIZES.items():
-        assert (counts[cls] == n // N_FOLDS).all()
+        assert counts.loc["test", cls] == round(n * SUBSET_TEST_SIZE)
 
 
 def test_subset_is_deterministic():

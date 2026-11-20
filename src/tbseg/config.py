@@ -28,6 +28,14 @@ SEED = 42
 N_FOLDS = 5
 IMAGE_SIZE = 512
 
-# Carpetas de TBX11K con etiqueta pública -> imágenes a muestrear para el subconjunto
-SUBSET_SIZES = {"tb": 800, "health": 400, "sick": 400}
+# Clases de TBX11K que entran al experimento -> imágenes a muestrear. Solo TB contra sanas,
+# como en Montgomery-Shenzhen: las enfermas sin TB (sick/) quedan fuera.
+SUBSET_SIZES = {"tb": 800, "health": 800}
 POSITIVE_CLASS = "tb"
+# Carpetas de TBX11K con etiqueta pública (incluye sick/, solo para la exploración)
+TBX11K_LABELED_CLASSES = ("tb", "health", "sick")
+# Imágenes del subconjunto en gris, 512x512, con nombre <image_id>.png (las usan predict y extract)
+TBX11K_PROCESSED_DIR = DATA_DIR / "processed" / "tbx11k"
+# Partición de TBX11K para los clasificadores: 80 % desarrollo / 20 % prueba, estratificada
+# por clase. No hay validación: los segmentadores no se entrenan con TBX11K.
+SUBSET_TEST_SIZE = 0.20
